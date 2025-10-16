@@ -226,5 +226,67 @@
     function agregarAlCarrito(id) {
       const productoExistente = carrito.find(p => p.id === id);
       if (productoExistente) {
+         productoExistente.cantidad++;
+      } else {
+        const producto = productos.find(p => p.id === id);
+        carrito.push({ ...producto, cantidad: 1 });
+      }
+      actualizarCarrito();
+    }
+
+    function actualizarCarrito() {
+      listaCarrito.innerHTML = "";
+      let total = 0;
+      let totalItems = 0;
+
+      carrito.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}`;
+        listaCarrito.appendChild(li);
+        total += item.precio * item.cantidad;
+        totalItems += item.cantidad;
+      });
+
+      totalCarrito.textContent = total.toFixed(2);
+      actualizarTituloCarrito(totalItems);
+    }
+
+    function actualizarTituloCarrito(cantidad) {
+      const titulo = document.querySelector(".carrito h2");
+      titulo.textContent = `🧾 Carrito de Compras (${cantidad})`;
+    }
+
+    function vaciarCarrito() {
+      if (confirm("¿Estás seguro de que quieres vaciar el carrito?")) {
+        carrito.length = 0;
+        actualizarCarrito();
+      }
+    }
+
+    function finalizarCompra() {
+      if (carrito.length === 0) {
+        alert("El carrito está vacío. Agrega productos antes de finalizar la compra.");
+        return;
+      }
+
+      alert("🎉 ¡Gracias por tu compra! En breve recibirás un correo de confirmación.");
+      carrito.length = 0;
+      actualizarCarrito();
+    }
+
+    // Crear botón "Finalizar compra" dinámicamente
+    const botonFinalizar = document.createElement("button");
+    botonFinalizar.textContent = "✅ Finalizar Compra";
+    botonFinalizar.className = "finalizar-compra";
+    botonFinalizar.onclick = finalizarCompra;
+
+    document.querySelector(".carrito").appendChild(botonFinalizar);
+
+    // Mostrar productos al cargar la página
+    mostrarProductos();
+  </script>
+
+</body>
+</html>
 
 
