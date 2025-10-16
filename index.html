@@ -1,0 +1,278 @@
+<h1 class="titulo-principal">DigitalArt - Ecommerce Obras de Arte</h1>
+
+<div id="productos"></div>
+
+<div class="carrito">
+  <h2>🧾 Carrito de Compras</h2>
+  <ul id="lista-carrito"></ul>
+  <p><strong>Total: $<span id="total">0.00</span></strong></p>
+  <button class="vaciar" onclick="vaciarCarrito()">🧼 Vaciar Carrito</button>
+</div>
+
+@import url('https://fonts.googleapis.com/css2?family=Nova+Flat&display=swap'); /* Si Bold Nova/Nova Light no está disponible en Google Fonts, deberías subirla o usar una alternativa similar */
+
+body {
+  font-family: 'Nova Light', Arial, sans-serif;
+  background-color: #F0F0F0; /* Gris Clara */
+  color: #505050; /* Gris Oscura */
+  padding: 20px;
+  text-align: center;
+  margin: 0;
+}
+
+.titulo-principal {
+  font-family: 'Bold Nova', Arial, sans-serif;
+  color: #00BFFF; /* Neon Azul */
+  font-size: 2.8rem;
+  margin-bottom: 25px;
+  letter-spacing: 1.2px;
+}
+
+.producto {
+  border: 2px solid #00FFFF; /* Cian Eléctrico */
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 15px;
+  display: inline-block;
+  width: 240px;
+  vertical-align: top;
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.producto:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(255, 0, 255, 0.4); /* Magenta Vibrante */
+}
+
+.producto img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.producto h3 {
+  font-family: 'Bold Nova', Arial, sans-serif;
+  font-size: 1.2rem;
+  color: #6A0DAD; /* Púrpura Profundo */
+  margin: 8px 0;
+}
+
+.producto p {
+  font-family: 'Nova Light', Arial, sans-serif;
+  font-size: 1rem;
+  color: #505050;
+  margin: 6px 0;
+}
+
+.producto button,
+.carrito button {
+  background: linear-gradient(45deg, #FF00FF, #00FFFF); /* Magenta Vibrante a Cian Eléctrico */
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  margin-top: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Bold Nova', Arial, sans-serif;
+  font-size: 1rem;
+  transition: background 0.4s ease;
+  box-shadow: 0 4px 15px rgba(255, 0, 255, 0.6);
+}
+
+.producto button:hover,
+.carrito button:hover {
+  background: linear-gradient(45deg, #00FFFF, #FF00FF);
+  box-shadow: 0 6px 25px rgba(0, 255, 255, 0.7);
+}
+
+.carrito {
+  margin-top: 40px;
+  padding: 25px;
+  background: white;
+  border-radius: 15px;
+  text-align: left;
+  display: inline-block;
+  box-shadow: 0 0 20px rgba(0, 255, 144, 0.4); /* Verde Digital */
+  width: 320px;
+}
+
+.carrito h2 {
+  font-family: 'Bold Nova', Arial, sans-serif;
+  color: #00FF90; /* Verde Digital */
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+}
+
+.carrito ul {
+  list-style: none;
+  padding-left: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+.carrito li {
+  font-family: 'Nova Light', Arial, sans-serif;
+  font-size: 1rem;
+  padding: 8px 0;
+  border-bottom: 1px solid #B0B0B0; /* Gris Media */
+}
+
+.carrito p strong {
+  font-family: 'Bold Nova', Arial, sans-serif;
+  font-size: 1.2rem;
+  color: #FF9900; /* Naranja Brillante */
+}
+
+.carrito button.vaciar {
+  background-color: #FF9900; /* Naranja Brillante */
+  margin-top: 10px;
+  font-family: 'Bold Nova', Arial, sans-serif;
+  box-shadow: 0 4px 15px rgba(255, 153, 0, 0.5);
+}
+
+.carrito button.vaciar:hover {
+  background-color: #e07c00;
+  box-shadow: 0 6px 25px rgba(224, 124, 0, 0.7);
+}
+
+/* Botón finalizar compra personalizado */
+
+button.finalizar-compra {
+  background: linear-gradient(45deg, #00BFFF, #FF00FF);
+  margin-top: 15px;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Bold Nova', Arial, sans-serif;
+  font-size: 1rem;
+  box-shadow: 0 5px 20px rgba(0, 191, 255, 0.7);
+  transition: background 0.3s ease;
+}
+
+button.finalizar-compra:hover {
+  background: linear-gradient(45deg, #FF00FF, #00BFFF);
+  box-shadow: 0 7px 30px rgba(255, 0, 255, 0.8);
+}
+
+
+const productos = [
+  {
+    id: 1,
+    nombre: "Noche estrellada- Van Gogh",
+    precio: 250.00,
+    imagen: "https://media.admagazine.com/photos/618a64eaa9f7fab6f0622e34/master/w_1600,c_limit/69563.jpg"
+  },
+  {
+    id: 2,
+    nombre: "Sueño de una tarde en la alameda central",
+    precio: 180.00,
+    imagen: "https://media.admagazine.com/photos/618a6e82b67f79aa891eddd0/master/w_1600,c_limit/57601.jpg"
+  },
+  {
+    id: 3,
+    nombre: "Guernica - Pablo Picasso",
+    precio: 300.00,
+    imagen: "https://media.admagazine.com/photos/618a6acbb67f79aa891edc15/master/w_1600,c_limit/68706.jpg"
+  },
+  {
+    id: 4,
+    nombre: "Nenúfares - Claude Monet",
+    precio: 180.00,
+    imagen: "https://media.admagazine.com/photos/618a6acbb67f79aa891edc17/master/w_1600,c_limit/68702.jpg"
+  },
+  {
+    id: 5,
+    nombre: "Omnisciencia - Clemente Orozco",
+    precio: 220.00,
+    imagen: "https://media.admagazine.com/photos/67db040ae1ecd0ff99478054/master/w_1600,c_limit/omnisciencia-jose-clemente-orozco.jpg"
+  }
+];
+
+const carrito = [];
+
+const contenedorProductos = document.getElementById("productos");
+const listaCarrito = document.getElementById("lista-carrito");
+const totalCarrito = document.getElementById("total");
+
+function mostrarProductos() {
+  productos.forEach(prod => {
+    const div = document.createElement("div");
+    div.className = "producto";
+    div.innerHTML = `
+      <img src="${prod.imagen}" alt="${prod.nombre}">
+      <h3>${prod.nombre}</h3>
+      <p>Precio: $${prod.precio.toFixed(2)}</p>
+      <button onclick="agregarAlCarrito(${prod.id})">Agregar al carrito</button>
+    `;
+    contenedorProductos.appendChild(div);
+  });
+}
+
+function agregarAlCarrito(id) {
+  const productoExistente = carrito.find(p => p.id === id);
+  if (productoExistente) {
+    productoExistente.cantidad++;
+  } else {
+    const producto = productos.find(p => p.id === id);
+    carrito.push({ ...producto, cantidad: 1 });
+  }
+  actualizarCarrito();
+}
+
+function actualizarCarrito() {
+  listaCarrito.innerHTML = "";
+  let total = 0;
+  let totalItems = 0;
+
+  carrito.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = `${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}`;
+    listaCarrito.appendChild(li);
+    total += item.precio * item.cantidad;
+    totalItems += item.cantidad;
+  });
+
+  totalCarrito.textContent = total.toFixed(2);
+  actualizarTituloCarrito(totalItems);
+}
+
+function actualizarTituloCarrito(cantidad) {
+  const titulo = document.querySelector(".carrito h2");
+  titulo.textContent = `🧾 Carrito de Compras (${cantidad})`;
+}
+
+function vaciarCarrito() {
+  if (confirm("¿Estás seguro de que quieres vaciar el carrito?")) {
+    carrito.length = 0;
+    actualizarCarrito();
+  }
+}
+
+function finalizarCompra() {
+  if (carrito.length === 0) {
+    alert("El carrito está vacío. Agrega productos antes de finalizar la compra.");
+    return;
+  }
+
+  alert("🎉 ¡Gracias por tu compra! En breve recibirás un correo de confirmación.");
+  carrito.length = 0;
+  actualizarCarrito();
+}
+
+
+const botonFinalizar = document.createElement("button");
+botonFinalizar.textContent = "✅ Finalizar Compra";
+botonFinalizar.className = "finalizar-compra";  // asignamos clase para CSS
+botonFinalizar.onclick = finalizarCompra;
+
+document.querySelector(".carrito").appendChild(botonFinalizar);
+
+mostrarProductos();
+
